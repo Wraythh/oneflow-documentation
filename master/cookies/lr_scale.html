@@ -991,7 +991,6 @@
 <span class="p">]</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">flow</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">param_groups</span><span class="p">)</span>
 </code></pre></div>
-<p>参数列表 <code>param_groups</code> 将不同的参数分组保存在不同的字典中，字典属性 <code>params</code> 指定了参数，<code>lr</code> 属性指定了学习率大小。优化器接收 <code>params_groups</code> 后在更新参数时，会对不同的参数使用指定的学习率进行更新。</p>
 <p><code>param_groups</code> 是一个 <code>list</code>，每一项是一个字典，将不同的参数分组保存在不同的字典中，字典属性 <code>params</code> 指定了参数，<code>lr</code> 属性指定了学习率大小。优化器接收 <code>params_groups</code> 这个 <code>list</code> 后，会遍历这个 <code>list</code> 中的每一项。对其中的 <code>params</code> 使用指定的学习率 <code>lr</code> 进行更新。</p>
 <p>接下来对模型进行训练</p>
 <div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EPOCH_NUM</span><span class="p">):</span>
@@ -1030,7 +1029,7 @@
     <span class="k">for</span> <span class="n">param_group</span> <span class="ow">in</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">param_groups</span><span class="p">:</span>
         <span class="n">param_group</span><span class="p">[</span><span class="s2">&quot;lr&quot;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">param_group</span><span class="p">[</span><span class="s2">&quot;lr_scale&quot;</span><span class="p">]</span>
 </code></pre></div>
-<p>最后，只需要每段时间调整一次学习率即可。</p>
+<p>这样，在训练过程中，调用 <code>adjust_learning_rate</code>，就可以分层地、动态调整学习率。</p>
 <div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EPOCH_NUM</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="se">\n</span><span class="s2">-------------------------------&quot;</span><span class="p">)</span>
     <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dataloader</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
